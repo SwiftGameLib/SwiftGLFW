@@ -5,18 +5,18 @@ import PackageDescription
 
 let targets: [PackageDescription.Target] = [
     .target(
-            name: "SwiftGLFW",
-            dependencies: ["CGLFW"]
-        ),
-        .systemLibrary(
-            name: "CGLFW",
-            pkgConfig: "glfw3",
-            providers: [.brew(["glfw"])]
-        ),
-        .testTarget(
-            name: "SwiftGLFWTests",
-            dependencies: ["SwiftGLFW"]
-        ),
+        name: "SwiftGLFW",
+        dependencies: ["cglfw"]
+    ),
+    .systemLibrary(
+        name: "cglfw",
+        pkgConfig: "glfw3",
+        providers: [.brew(["glfw"])]
+    ),
+    .testTarget(
+        name: "SwiftGLFWTests",
+        dependencies: ["SwiftGLFW"]
+    ),
 ]
 
 let package = Package(

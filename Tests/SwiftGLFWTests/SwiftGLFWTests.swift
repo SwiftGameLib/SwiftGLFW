@@ -2,11 +2,13 @@ import XCTest
 @testable import SwiftGLFW
 
 final class SwiftGLFWTests: XCTestCase {
-    func testExample() {
-        // This is an empty placeholder test.
+    func testInitializationAndTermination() {
+        GLFWInitHint(.JoystickHatButtons(true))
+        XCTAssertTrue(GLFWInit())
+        GLFWTerminate()
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testInitializationAndTermination", testInitializationAndTermination),
     ]
 }
