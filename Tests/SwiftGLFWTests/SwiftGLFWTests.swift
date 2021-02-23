@@ -8,7 +8,14 @@ final class SwiftGLFWTests: XCTestCase {
         GLFWTerminate()
     }
 
+    func testVersion() {
+        let (major, minor, revision) = GLFWGetVersion()
+        let versionString = GLFWGetVersionString()
+        XCTAssert(versionString!.starts(with: "\(major).\(minor).\(revision)"))
+    }
+
     static var allTests = [
         ("testInitializationAndTermination", testInitializationAndTermination),
+        ("testVersion", testVersion),
     ]
 }
