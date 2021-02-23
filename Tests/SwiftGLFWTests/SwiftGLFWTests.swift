@@ -14,8 +14,20 @@ final class SwiftGLFWTests: XCTestCase {
         XCTAssert(versionString!.starts(with: "\(major).\(minor).\(revision)"))
     }
 
+    func testGetError() {
+        var error = GLFWGetError()
+        XCTAssertNil(error)
+
+        glfwInitHint(255, 255)
+        error = GLFWGetError()
+        XCTAssertNotNil(error)
+        XCTAssertNotEqual(error!.errorCode, Int(GLFW_NO_ERROR))
+        XCTAssertNotNil(error!.errorDescription)
+    }
+
     static var allTests = [
         ("testInitializationAndTermination", testInitializationAndTermination),
         ("testVersion", testVersion),
+        ("testGetError", testGetError),
     ]
 }
