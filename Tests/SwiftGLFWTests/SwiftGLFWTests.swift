@@ -25,9 +25,26 @@ final class SwiftGLFWTests: XCTestCase {
         XCTAssertNotNil(error!.errorDescription)
     }
 
+    func testErrorCallback() {
+        let expectation = self.expectation(description: "Error occurred")
+        GLFWSetErrorCallback { (errorCode, errorDescription) in
+            XCTAssertNotNil(errorDescription)
+            print("Got expected error: \(errorDescription!)")
+            // Clear the error message
+            GLFWGetError()
+            if errorCode != 0 {
+                expectation.fulfill()
+            }
+        }
+        glfwInitHint(255, 255)
+        waitForExpectations(timeout: 1, handler: nil)
+        GLFWSetErrorCallback(callback: nil)
+    }
+
     static var allTests = [
         ("testInitializationAndTermination", testInitializationAndTermination),
         ("testVersion", testVersion),
         ("testGetError", testGetError),
+        ("testErrorCallback", testErrorCallback),
     ]
 }
