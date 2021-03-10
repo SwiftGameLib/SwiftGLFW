@@ -28,8 +28,9 @@ jobs:
     - uses: sersoft-gmbh/SwiftyActions@v1
       with:
         release-version: 5.3
-    - run: sudo apt install libglfw3
-    - run: sudo apt install libglfw3-dev
+    - uses: actions/checkout@v2
+    - run: sudo apt-get install libglfw3
+    - run: sudo apt-get install libglfw3-dev
     - name: Build
       run: swift build -v
     - name: Run tests
