@@ -13,6 +13,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+      with:
+        ref: 'main'
     - name: Publish Jazzy Docs
       uses: steven0351/publish-jazzy-docs@v1
       with:
