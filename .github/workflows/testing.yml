@@ -8,13 +8,28 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
-  build:
+  macOSBuild:
 
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
     - run: brew install glfw
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+
+  linuxBuild:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: sersoft-gmbh/SwiftyActions@v1
+      with:
+        release-version: 5.3
+    - run: sudo apt install libglfw3
+    - run: sudo apt install libglfw3-dev
     - name: Build
       run: swift build -v
     - name: Run tests
