@@ -1,0 +1,20 @@
+name: PublishDocumentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy_docs:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Publish Jazzy Docs
+      uses: steven0351/publish-jazzy-docs@v1
+      with:
+        personal_access_toke: ${{ secrets.JAZZY_TOKEN }}
+        config: .jazzy.yaml
