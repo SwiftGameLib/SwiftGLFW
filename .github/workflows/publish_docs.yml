@@ -1,4 +1,27 @@
-name: PublishDocumentation
+# name: PublishDocumentation
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+
+# jobs:
+#   deploy_docs:
+#     runs-on: macOS-latest
+#     steps:
+#     - uses: actions/checkout@v1
+#       with:
+#         ref: 'main'
+#     - name: Publish Jazzy Docs
+#       uses: steven0351/publish-jazzy-docs@v1
+#       with:
+#         personal_access_token: ${{ secrets.JAZZY_TOKEN }}
+#         config: .jazzy.yaml
+# .github/workflows/documentation.yml
+name: Documentation
 
 on:
   push:
@@ -9,14 +32,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy_docs:
-    runs-on: macOS-latest
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v1
-      with:
-        ref: 'main'
-    - name: Publish Jazzy Docs
-      uses: steven0351/publish-jazzy-docs@v1
-      with:
-        personal_access_token: ${{ secrets.JAZZY_TOKEN }}
-        config: .jazzy.yaml
+      - uses: actions/checkout@v1
+      - name: Generate Documentation
+        uses: SwiftDocOrg/swift-doc@master
+        with:
+          inputs: "Sources"
+          module-name: SwiftGLFW
+          output: "Documentation"
+      - name: Upload Documentation to Wiki
+        uses: SwiftDocOrg/github-wiki-publish-action@v1
+        with:
+          path: "Documentation"
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.JAZZY_TOKEN }}
