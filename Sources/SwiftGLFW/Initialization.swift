@@ -31,17 +31,17 @@ public func GLFWTerminate() {
 /// - SeeAlso: `GLFWInitHint()`
 /// - Note: The corresponding C enums are [Initialization hints](https://www.glfw.org/docs/latest/intro_guide.html#init_hints).
 public enum InitHint {
-    case JoystickHatButtons(Bool)
+    case JoystickHat(exposeAsButtons:Bool)
     #if os(macOS)
-    case CocoaChdirResources(Bool)
-    case CocoaMenubar(Bool)
+    case CocoaCurrentDirectory(setToResources: Bool)
+    case CocoaMenubar(createBasic: Bool)
     #endif
 
     internal func glfwHintAndValue() -> (Int32, Int32) {
         switch self {
-        case .JoystickHatButtons(let value):
+        case .JoystickHat(let value):
             return (GLFW_JOYSTICK_HAT_BUTTONS, value.glfwInt)
-        case .CocoaChdirResources(let value):
+        case .CocoaCurrentDirectory(let value):
             return (GLFW_COCOA_CHDIR_RESOURCES, value.glfwInt)
         case .CocoaMenubar(let value):
             return (GLFW_COCOA_MENUBAR, value.glfwInt)

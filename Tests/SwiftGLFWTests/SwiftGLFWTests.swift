@@ -3,7 +3,7 @@ import XCTest
 
 final class SwiftGLFWTests: XCTestCase {
     func testInitializationAndTermination() {
-        GLFWInitHint(.JoystickHatButtons(true))
+        GLFWInitHint(.JoystickHat(exposeAsButtons: true))
         XCTAssertTrue(GLFWInit())
         GLFWTerminate()
     }
