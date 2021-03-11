@@ -10,8 +10,9 @@ let targets: [PackageDescription.Target] = [
     ),
     .systemLibrary(
         name: "cglfw",
+        path: "Sources/cglfw",
         pkgConfig: "glfw3",
-        providers: [.brew(["glfw"])]
+        providers: [.brew(["glfw"]), .apt(["libglfw3"])]
     ),
     .testTarget(
         name: "SwiftGLFWTests",
