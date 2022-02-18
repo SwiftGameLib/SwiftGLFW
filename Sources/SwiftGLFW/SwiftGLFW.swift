@@ -6,3 +6,6 @@
 //
 
 @_exported import cglfw
+
+public enum GLFW {
+}

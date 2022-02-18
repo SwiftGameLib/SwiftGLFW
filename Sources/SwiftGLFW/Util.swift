@@ -12,9 +12,26 @@ extension Bool {
     init(_ glfwBool: Int32) {
         self = glfwBool == GLFW_TRUE
     }
+}
 
-    var glfwInt: Int32 {
-        return self ? GLFW_TRUE : GLFW_FALSE
+protocol GLFWValueProviding {
+    var glfwValue: Int32 { get }
+}
+
+extension Optional: GLFWValueProviding where Wrapped == Int {
+    var glfwValue: Int32 {
+        return self != nil ? Int32(self!) : GLFW_DONT_CARE
+    }
+}
+extension Int: GLFWValueProviding {
+    var glfwValue: Int32 {
+        return Int32(self)
+    }
+}
+
+extension Bool: GLFWValueProviding {
+    var glfwValue: Int32 {
+        return self  ? GLFW_TRUE : GLFW_FALSE
     }
 }
 

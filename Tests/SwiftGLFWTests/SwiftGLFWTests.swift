@@ -1,25 +1,25 @@
 import XCTest
-@testable import SwiftGLFW
+import SwiftGLFW
 
 final class SwiftGLFWTests: XCTestCase {
     func testInitializationAndTermination() {
-        GLFWInitHint(.JoystickHat(exposeAsButtons: true))
-        XCTAssertTrue(GLFWInit())
-        GLFWTerminate()
+        GLFW.initHint(.JoystickHat(exposeAsButtons: true))
+        XCTAssertTrue(GLFW.initialize())
+        GLFW.terminate()
     }
 
     func testVersion() {
-        let (major, minor, revision) = GLFWGetVersion()
-        let versionString = GLFWGetVersionString()
+        let (major, minor, revision) = GLFW.version
+        let versionString = GLFW.versionString
         XCTAssert(versionString!.starts(with: "\(major).\(minor).\(revision)"))
     }
 
     func testGetError() {
-        var error = GLFWGetError()
+        var error = GLFW.error()
         XCTAssertNil(error)
 
         glfwInitHint(255, 255)
-        error = GLFWGetError()
+        error = GLFW.error()
         XCTAssertNotNil(error)
         XCTAssertNotEqual(error!.errorCode, Int(GLFW_NO_ERROR))
         XCTAssertNotNil(error!.errorDescription)
@@ -27,18 +27,18 @@ final class SwiftGLFWTests: XCTestCase {
 
     func testErrorCallback() {
         let expectation = self.expectation(description: "Error occurred")
-        GLFWSetErrorCallback { (errorCode, errorDescription) in
+        GLFW.setErrorCallback { (errorCode, errorDescription) in
             XCTAssertNotNil(errorDescription)
             print("Got expected error: \(errorDescription!)")
             // Clear the error message
-            GLFWGetError()
+            GLFW.error()
             if errorCode != 0 {
                 expectation.fulfill()
             }
         }
         glfwInitHint(255, 255)
         waitForExpectations(timeout: 1, handler: nil)
-        GLFWSetErrorCallback(callback: nil)
+        GLFW.setErrorCallback(callback: nil)
     }
 
     static var allTests = [
